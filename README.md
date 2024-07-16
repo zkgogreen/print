@@ -2,7 +2,7 @@
 
 ## Installation
 
-1. Download Python di [link ini](https://www.python.org/ftp/python/3.12.4/python-3.12.4-amd64.exe)
+1. Download Python di [link ini](https://www.python.org/ftp/python/3.12.4/python-3.12.4-amd64.exe) dan git di [link ini](https://git-scm.com/downloads)
 2. jika sudah, buka terminal windows
 3. ketik kode berikut ini di terminal
 ```bash
