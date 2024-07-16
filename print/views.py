@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+import win32print
+import win32api
 import os
 from datetime import datetime
 
@@ -49,7 +51,15 @@ def generate_and_print_pdf(request):
     
     # Print the PDF file
     try:
-        os.startfile(pdf_path, "print")
+        printer_name = win32print.GetDefaultPrinter()
+        win32api.ShellExecute(
+            0,
+            "print",
+            pdf_path,
+            f'/d:"{printer_name}"',
+            ".",
+            0
+        )
         print("Print job sent successfully.")
     except Exception as e:
         print(f"Error sending print job: {e}")
