@@ -12,7 +12,7 @@ pip install virtualenv
 mkdir project && cd project
 ```
 ```bash
-virtualenv env && cd env\Scripts\activate.bat
+virtualenv env && env\Scripts\activate.bat
 ```
 ```bash
 pip install django reportlab
