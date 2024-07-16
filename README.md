@@ -9,6 +9,9 @@
 pip install virtualenv
 ```
 ```bash
+mkdir project && cd project
+```
+```bash
 virtualenv env && cd env\Scripts\activate.bat
 ```
 ```bash
