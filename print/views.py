@@ -23,12 +23,12 @@ def generate_and_print_pdf(request):
     
     # Create a PDF file
     c = canvas.Canvas(pdf_path, pagesize=(227, 400))  # 227 points = 80mm width
-    c.setFont("Helvetica", 10)
+    c.setFont("Arial", 12)
     
     # Function to draw justified text
     def draw_justified_text(c, text_left, text_right, y):
         c.drawString(10, y, text_left)
-        text_width = c.stringWidth(text_right, "Helvetica", 10)
+        text_width = c.stringWidth(text_right, "Arial", 12)
         c.drawString(227 - 10 - text_width, y, text_right)
     
     # Add content to the PDF
