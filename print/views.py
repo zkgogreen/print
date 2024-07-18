@@ -24,12 +24,12 @@ def generate_and_print_pdf(request):
     pdfmetrics.registerFont(TTFont('Dotmatix', 'DOTMATRI.TTF'))
     # Create a PDF file
     c = canvas.Canvas(pdf_path, pagesize=(227, 400))  # 227 points = 80mm width
-    c.setFont("Dotmatix", 12)
+    c.setFont("Dotmatix", 16)
     
     # Function to draw justified text
     def draw_justified_text(c, text_left, text_right, y):
         c.drawString(10, y, text_left)
-        text_width = c.stringWidth(text_right, "Dotmatix", 12)
+        text_width = c.stringWidth(text_right, "Dotmatix", 16)
         c.drawString(227 - 10 - text_width, y, text_right)
     
     # Add content to the PDF
