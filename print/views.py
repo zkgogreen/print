@@ -20,9 +20,9 @@ def generate_and_print_pdf(request):
 
     # Define the file path
     pdf_path = 'receipt.pdf'
-    
+    y = 1000
     # Create a PDF file
-    c = canvas.Canvas(pdf_path, pagesize=(227, 770))  # 227 points = 80mm width
+    c = canvas.Canvas(pdf_path, pagesize=(227, y))  # 227 points = 80mm width
     c.setFont("Helvetica", 12)
     
     # Function to draw justified text
@@ -31,7 +31,8 @@ def generate_and_print_pdf(request):
         text_width = c.stringWidth(text_right, "Helvetica", 12)
         c.drawString(227 - 10 - text_width, y, text_right)
     
-    y = 770
+    
+    y -= 40
     
     # Add content to the PDF
     c.drawString(10, y, toko)
