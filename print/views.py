@@ -21,7 +21,7 @@ def generate_and_print_pdf(request):
 
     # Define the file path
     pdf_path = 'receipt.pdf'
-    pdfmetrics.registerFont(TTFont('Dotmatix', 'DOTMBold.TTF'))
+    pdfmetrics.registerFont(TTFont('Dotmatix', 'DOTMATRI.TTF'))
     # Create a PDF file
     c = canvas.Canvas(pdf_path, pagesize=(227, 400))  # 227 points = 80mm width
     c.setFont("Dotmatix", 12)
