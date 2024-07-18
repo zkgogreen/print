@@ -5,7 +5,6 @@ import win32print
 import win32api
 import os
 from datetime import datetime
-from reportlab.lib.pagesizes import letter
 
 def generate_and_print_pdf(request):
     # Get parameters from the request
@@ -23,7 +22,7 @@ def generate_and_print_pdf(request):
     pdf_path = 'receipt.pdf'
     
     # Create a PDF file
-    c = canvas.Canvas(pdf_path, pagesize=letter)  # 227 points = 80mm width
+    c = canvas.Canvas(pdf_path, pagesize=(227, 770))  # 227 points = 80mm width
     c.setFont("Helvetica", 12)
     
     # Function to draw justified text
@@ -32,7 +31,7 @@ def generate_and_print_pdf(request):
         text_width = c.stringWidth(text_right, "Helvetica", 12)
         c.drawString(227 - 10 - text_width, y, text_right)
     
-    y = 770  
+    y = 770
     
     # Add content to the PDF
     c.drawString(10, y, toko)
@@ -55,12 +54,12 @@ def generate_and_print_pdf(request):
     
     # Print the PDF file
     try:
-        # printer_name = win32print.GetDefaultPrinter()
+        printer_name = win32print.GetDefaultPrinter()
         win32api.ShellExecute(
             0,
             "print",
             pdf_path,
-            None,
+            f'/d:"{printer_name}"',
             ".",
             0
         )
