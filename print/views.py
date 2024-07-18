@@ -11,7 +11,7 @@ def generate_and_print_pdf(request):
     number = request.GET.get('number', '0001')
     datetime_str = request.GET.get('datetime', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     date_to_print = request.GET.get('datekasir', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-    toko = request.GET.get('toko', 'Default Store')
+    toko = request.GET.get('toko', 'TOKO KUE')
     kasir = request.GET.get('kasir', 'Default Cashier')
     pembayaran = request.GET.get('pembayaran', '0.00')
     total = request.GET.get('total', '0.00')
