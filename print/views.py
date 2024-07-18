@@ -1,6 +1,5 @@
 from django.http import HttpResponse
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.pdfbase import pdfmetrics
+from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 import win32print
 import win32api
@@ -21,25 +20,25 @@ def generate_and_print_pdf(request):
 
     # Define the file path
     pdf_path = 'receipt.pdf'
-    pdfmetrics.registerFont(TTFont('Dotmatix', 'DOTMATRI.TTF'))
+    
     # Create a PDF file
-    c = canvas.Canvas(pdf_path, pagesize=(227, 400))  # 227 points = 80mm width
-    c.setFont("Dotmatix", 16)
+    c = canvas.Canvas(pdf_path, pagesize=(227, 200))  # 227 points = 80mm width
+    c.setFont("Helvetica", 12)
     
     # Function to draw justified text
     def draw_justified_text(c, text_left, text_right, y):
         c.drawString(10, y, text_left)
-        text_width = c.stringWidth(text_right, "Dotmatix", 16)
+        text_width = c.stringWidth(text_right, "Helvetica", 12)
         c.drawString(227 - 10 - text_width, y, text_right)
     
     # Add content to the PDF
-    c.drawString(10, 390, toko)
-    draw_justified_text(c, "Receipt No:", number, 370)
-    draw_justified_text(c, "waktu:", datetime_str, 350)
-    c.drawString(10, 330, "-"*63)
-    draw_justified_text(c, "Total Pembayaran:", f"Rp.{pembayaran}", 310)
-    draw_justified_text(c, "Total Bayar:", f"Rp.{total}", 290)
-    draw_justified_text(c, "Kembalian:", f"Rp.{kembalian}", 270)
+    c.drawString(10, 180, toko)
+    draw_justified_text(c, "Receipt No:", number, 160)
+    draw_justified_text(c, "waktu:", datetime_str, 140)
+    c.drawString(10, 120, "-"*63)
+    draw_justified_text(c, "Total Pembayaran:", f"Rp.{pembayaran}", 100)
+    draw_justified_text(c, "Total Bayar:", f"Rp.{total}", 80)
+    draw_justified_text(c, "Kembalian:", f"Rp.{kembalian}", 60)
     
     # Finish up and save the PDF
     c.showPage()
