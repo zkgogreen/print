@@ -1,5 +1,6 @@
 from django.http import HttpResponse
-from reportlab.lib.pagesizes import letter
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfgen import canvas
 import win32print
 import win32api
@@ -20,15 +21,15 @@ def generate_and_print_pdf(request):
 
     # Define the file path
     pdf_path = 'receipt.pdf'
-    
+    pdfmetrics.registerFont(TTFont('Dotmatix', 'DOTMBold.TTF'))
     # Create a PDF file
     c = canvas.Canvas(pdf_path, pagesize=(227, 400))  # 227 points = 80mm width
-    c.setFont("Helvetica", 12)
+    c.setFont("Dotmatix", 12)
     
     # Function to draw justified text
     def draw_justified_text(c, text_left, text_right, y):
         c.drawString(10, y, text_left)
-        text_width = c.stringWidth(text_right, "Helvetica", 12)
+        text_width = c.stringWidth(text_right, "Dotmatix", 12)
         c.drawString(227 - 10 - text_width, y, text_right)
     
     # Add content to the PDF
