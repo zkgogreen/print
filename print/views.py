@@ -54,12 +54,12 @@ def generate_and_print_pdf(request):
     
     # Print the PDF file
     try:
-        printer_name = win32print.GetDefaultPrinter()
+        # printer_name = win32print.GetDefaultPrinter()
         win32api.ShellExecute(
             0,
             "print",
             pdf_path,
-            f'/d:"{printer_name}"',
+            None,
             ".",
             0
         )
