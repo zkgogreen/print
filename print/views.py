@@ -22,14 +22,14 @@ def generate_and_print_pdf(request):
     pdf_path = 'receipt.pdf'
     y = 1600
     # Create a PDF file
-    c = canvas.Canvas(pdf_path, pagesize=(250, y))  # 250 points = 80mm width
+    c = canvas.Canvas(pdf_path, pagesize=(227, y))  # 227 points = 80mm width
     c.setFont("Helvetica",13)
     
     # Function to draw justified text
     def draw_justified_text(c, text_left, text_right, y):
         c.drawString(10, y, text_left)
         text_width = c.stringWidth(text_right, "Helvetica",13)
-        c.drawString(250 - 10 - text_width, y, text_right)
+        c.drawString(227 - 10 - text_width, y, text_right)
     
     
     y -= 20
@@ -49,8 +49,12 @@ def generate_and_print_pdf(request):
     y -= 20
     draw_justified_text(c, f"{metode_bayar}:", f"Rp.{total}", y)
     y -= 20
+    c.drawString(10, y, "-"*60)
+    y -= 20
     draw_justified_text(c, "Kembalian:", f"Rp.{kembalian}", y)
-
+    y -= 20
+    c.drawString(10, y, "-"*60)
+    
     c.showPage()
     c.save()
     
