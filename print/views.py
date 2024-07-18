@@ -32,18 +32,13 @@ def generate_and_print_pdf(request):
         c.drawString(227 - 10 - text_width, y, text_right)
     
     # Add content to the PDF
-    c.drawString(10, 380, toko)
-    draw_justified_text(c, "Receipt No:", number, 360)
-    draw_justified_text(c, "waktu:", datetime_str, 340)
-    # draw_justified_text(c, "Cashier:", kasir, 320)
-    c.drawString(10, 300, "-"*63)
-    draw_justified_text(c, "Total Pembayaran:", f"Rp.{pembayaran}", 280)
-    draw_justified_text(c, "Total Bayar:", f"Rp.{total}", 260)
-    # draw_justified_text(c, "Metode Pembayaran:", metode_bayar, 240)
-    draw_justified_text(c, "Kembalian:", f"Rp.{kembalian}", 220)
-    # c.drawString(10, 210, "-"*63)
-    # c.drawString(10, 200, f"Terima kasih telah belanja di {toko}")
-    # c.drawString(10, 180, f"dicetak pada {date_to_print}")
+    c.drawString(10, 180, toko)
+    draw_justified_text(c, "Receipt No:", number, 160)
+    draw_justified_text(c, "waktu:", datetime_str, 140)
+    c.drawString(10, 120, "-"*63)
+    draw_justified_text(c, "Total Pembayaran:", f"Rp.{pembayaran}", 100)
+    draw_justified_text(c, "Total Bayar:", f"Rp.{total}", 80)
+    draw_justified_text(c, "Kembalian:", f"Rp.{kembalian}", 60)
     
     # Finish up and save the PDF
     c.showPage()
