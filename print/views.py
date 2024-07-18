@@ -22,7 +22,7 @@ def generate_and_print_pdf(request):
     pdf_path = 'receipt.pdf'
     
     # Create a PDF file
-    c = canvas.Canvas(pdf_path, pagesize=(227, 200))  # 227 points = 80mm width
+    c = canvas.Canvas(pdf_path, pagesize=(227, 400))  # 227 points = 80mm width
     c.setFont("Helvetica", 12)
     
     # Function to draw justified text
@@ -31,14 +31,22 @@ def generate_and_print_pdf(request):
         text_width = c.stringWidth(text_right, "Helvetica", 12)
         c.drawString(227 - 10 - text_width, y, text_right)
     
+    y = 390
+    
     # Add content to the PDF
-    c.drawString(10, 180, toko)
-    draw_justified_text(c, "Receipt No:", number, 160)
-    draw_justified_text(c, "waktu:", datetime_str, 140)
-    c.drawString(10, 120, "-"*63)
-    draw_justified_text(c, "Total Pembayaran:", f"Rp.{pembayaran}", 100)
-    draw_justified_text(c, "Total Bayar:", f"Rp.{total}", 80)
-    draw_justified_text(c, "Kembalian:", f"Rp.{kembalian}", 60)
+    c.drawString(10, y, toko)
+    y -= 20
+    draw_justified_text(c, "Receipt No:", number, y)
+    y -= 20
+    draw_justified_text(c, "waktu:", datetime_str, y)
+    y -= 20
+    c.drawString(10, y, "-"*30)
+    y -= 20
+    draw_justified_text(c, "Total Pembayaran:", f"Rp.{pembayaran}", y)
+    y -= 20
+    draw_justified_text(c, "Total Bayar:", f"Rp.{total}", y)
+    y -= 20
+    draw_justified_text(c, "Kembalian:", f"Rp.{kembalian}", y)
     
     # Finish up and save the PDF
     c.showPage()
