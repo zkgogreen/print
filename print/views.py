@@ -52,24 +52,17 @@ def generate_and_print_pdf(request):
     # Print the PDF file
     try:
         printer_name = win32print.GetDefaultPrinter()
-        hPrinter = win32print.OpenPrinter(printer_name)
-        try:
-            # Define the printer job
-            job_name = "Receipt Printing"
-            hJob = win32print.StartDocPrinter(hPrinter, 1, (job_name, None, "RAW"))
-            try:
-                win32print.StartPagePrinter(hPrinter)
-                with open(pdf_path, "rb") as f:
-                    pdf_data = f.read()
-                    win32print.WritePrinter(hPrinter, pdf_data)
-                win32print.EndPagePrinter(hPrinter)
-            finally:
-                win32print.EndDocPrinter(hPrinter)
-        finally:
-            win32print.ClosePrinter(hPrinter)
+        win32api.ShellExecute(
+            0,
+            "print",
+            pdf_path,
+            f'/d:"{printer_name}"',
+            ".",
+            0
+        )
         print("Print job sent successfully.")
     except Exception as e:
-        print(f"Error sending print job: {e}")
+        return HttpResponse(f"<center><h1>Gagal print dokumen : {str(e)} </h1></center>")
     
     # Return a response
     return HttpResponse("<script>window.close();</script>")
