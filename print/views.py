@@ -27,25 +27,25 @@ def generate_and_print_pdf(request):
     
     # Function to draw justified text
     def draw_justified_text(c, text_left, text_right, y):
-        c.drawString(10, y, text_left)
+        c.drawString(12, y, text_left)
         text_width = c.stringWidth(text_right, "Helvetica", 12)
-        c.drawString(227 - 10 - text_width, y, text_right)
+        c.drawString(227 - 12 - text_width, y, text_right)
     
     
     y -= 20
     
     # Add content to the PDF
-    c.drawString(10, y, toko)
+    c.drawString(12, y, toko)
     y -= 20
-    c.drawString(10, y, datetime_str)
+    c.drawString(12, y, datetime_str)
     y -= 20
-    c.drawString(10, y, number)
+    c.drawString(12, y, number)
     y -= 20
-    c.drawString(10, y, "-"*60)
+    c.drawString(12, y, "-"*60)
     y -= 20
     draw_justified_text(c, "Total Pembayaran:", f"Rp.{pembayaran}", y)
     y -= 20
-    c.drawString(10, y, "-"*60)
+    c.drawString(12, y, "-"*60)
     y -= 20
     draw_justified_text(c, f"{metode_bayar}:", f"Rp.{total}", y)
     y -= 20
