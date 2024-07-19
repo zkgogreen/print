@@ -5,6 +5,8 @@ import win32print
 import win32api
 import os
 from datetime import datetime
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfbase import pdfmetrics
 
 def generate_and_print_pdf(request):
     # Get parameters from the request
@@ -19,40 +21,41 @@ def generate_and_print_pdf(request):
     kembalian = request.GET.get('kembalian', '0.00')
 
     # Define the file path
+    pdfmetrics.registerFont(TTFont('PuffFont', 'DOTMATRI.TTF'))
     pdf_path = 'receipt.pdf'
     y = 1350
     # Create a PDF file
     c = canvas.Canvas(pdf_path, pagesize=(227, y))  # 227 points = 80mm width
-    c.setFont("Helvetica", 12)
+    c.setFont("PuffFont", 13)
     
     # Function to draw justified text
     def draw_justified_text(c, text_left, text_right, y):
-        c.drawString(12, y, text_left)
-        text_width = c.stringWidth(text_right, "Helvetica", 12)
-        c.drawString(227 - 12 - text_width, y, text_right)
+        c.drawString(9, y, text_left)
+        text_width = c.stringWidth(text_right, "PuffFont", 13)
+        c.drawString(227 - 9 - text_width, y, text_right)
     
     
-    y -= 20
+    y -= 40
     
-    c.drawString(10, y, toko)
+    c.drawString(9, y, toko)
     y -= 20
-    c.drawString(10, y, datetime_str)
+    c.drawString(9, y, datetime_str)
     y -= 20
-    c.drawString(10, y, number)
+    c.drawString(9, y, number)
     y -= 20
-    c.drawString(10, y, "-"*60)
+    c.drawString(9, y, "-"*60)
     y -= 20
     draw_justified_text(c, "Total Pembayaran:", f"Rp.{pembayaran}", y)
     y -= 20
-    c.drawString(10, y, "-"*60)
+    c.drawString(9, y, "-"*60)
     y -= 20
     draw_justified_text(c, f"{metode_bayar}:", f"Rp.{total}", y)
     y -= 20
-    c.drawString(10, y, "-"*60)
+    c.drawString(9, y, "-"*60)
     y -= 20
     draw_justified_text(c, "Kembalian:", f"Rp.{kembalian}", y)
     y -= 20
-    c.drawString(10, y, "-"*60)
+    c.drawString(9, y, "-"*60)
     
     # Finish up and save the PDF
     c.showPage()
