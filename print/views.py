@@ -29,14 +29,14 @@ def generate_and_print_pdf(request):
     pdf_path = 'receipt.pdf'
     y = data.page_higth
     # Create a PDF file
-    c = canvas.Canvas(pdf_path, pagesize=(data.page_higth, y))  # 227 points = 80mm width
+    c = canvas.Canvas(pdf_path, pagesize=(data.page_width, y))  # 227 points = 80mm width
     c.setFont("PuffFont", data.font_size)
     
     # Function to draw justified text
     def draw_justified_text(c, text_left, text_right, y):
         c.drawString(data.padding, y, text_left)
         text_width = c.stringWidth(text_right, "PuffFont", data.font_size)
-        c.drawString(227 - data.padding - text_width, y, text_right)
+        c.drawString(data.page_width - data.padding - text_width, y, text_right)
     
     
     y -= 40
