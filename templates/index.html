@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title> {{data.toko}}</title>
     {% load django_bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
 </head>
 <body>
     <div class="container ">
+        <div class="display-5 mt-5 mb-3 text-center">Panel admin - {{data.toko}}</div>
         <div class="p-3 shadow rounded-3">
             <form action="" method="post" enctype="multipart/form-data">
                 {% bootstrap_form form %}

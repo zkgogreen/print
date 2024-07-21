@@ -11,6 +11,7 @@ def index(request):
         if form.is_valid():
             form.save()
     context = {
-        'form':MainForm(instance=instance)
+        'form':MainForm(instance=instance),
+        'data':instance
     }
     return render(request, 'index.html', context)
