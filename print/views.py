@@ -8,12 +8,16 @@ from datetime import datetime
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase import pdfmetrics
 
+from main.models import Main
+
 def generate_and_print_pdf(request):
+
+    data = Main.objects.all().first()
     # Get parameters from the request
     number = request.GET.get('number', '0001')
     datetime_str = request.GET.get('datetime', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     date_to_print = request.GET.get('datekasir', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-    toko = request.GET.get('toko', 'TOKO KUE')
+    toko = request.GET.get('toko', data.toko)
     kasir = request.GET.get('kasir', 'Default Cashier')
     pembayaran = request.GET.get('pembayaran', '0.00')
     total = request.GET.get('total', '0.00')
@@ -21,41 +25,41 @@ def generate_and_print_pdf(request):
     kembalian = request.GET.get('kembalian', '0.00')
 
     # Define the file path
-    pdfmetrics.registerFont(TTFont('PuffFont', 'DOTMATRI.TTF'))
+    pdfmetrics.registerFont(TTFont('PuffFont', data.font))
     pdf_path = 'receipt.pdf'
-    y = 1350
+    y = data.page_higth
     # Create a PDF file
-    c = canvas.Canvas(pdf_path, pagesize=(227, y))  # 227 points = 80mm width
-    c.setFont("PuffFont", 13)
+    c = canvas.Canvas(pdf_path, pagesize=(data.page_higth, y))  # 227 points = 80mm width
+    c.setFont("PuffFont", data.font_size)
     
     # Function to draw justified text
     def draw_justified_text(c, text_left, text_right, y):
-        c.drawString(9, y, text_left)
-        text_width = c.stringWidth(text_right, "PuffFont", 13)
-        c.drawString(227 - 9 - text_width, y, text_right)
+        c.drawString(data.padding, y, text_left)
+        text_width = c.stringWidth(text_right, "PuffFont", data.font_size)
+        c.drawString(227 - data.padding - text_width, y, text_right)
     
     
     y -= 40
     
-    c.drawString(9, y, toko)
+    c.drawString(data.padding, y, toko)
     y -= 20
-    c.drawString(9, y, datetime_str)
+    c.drawString(data.padding, y, datetime_str)
     y -= 20
-    c.drawString(9, y, number)
+    c.drawString(data.padding, y, number)
     y -= 20
-    c.drawString(9, y, "-"*60)
+    c.drawString(data.padding, y, "-"*60)
     y -= 20
     draw_justified_text(c, "Total Pembayaran:", f"Rp.{pembayaran}", y)
     y -= 20
-    c.drawString(9, y, "-"*60)
+    c.drawString(data.padding, y, "-"*60)
     y -= 20
     draw_justified_text(c, f"{metode_bayar}:", f"Rp.{total}", y)
     y -= 20
-    c.drawString(9, y, "-"*60)
+    c.drawString(data.padding, y, "-"*60)
     y -= 20
     draw_justified_text(c, "Kembalian:", f"Rp.{kembalian}", y)
     y -= 20
-    c.drawString(9, y, "-"*60)
+    c.drawString(data.padding, y, "-"*60)
     
     # Finish up and save the PDF
     c.showPage()
