@@ -25,17 +25,17 @@ def generate_and_print_pdf(request):
     kembalian = request.GET.get('kembalian', '0.00')
 
     # Define the file path
-    pdfmetrics.registerFont(TTFont('PuffFont', data.font))
+    # pdfmetrics.registerFont(TTFont('PuffFont', data.font))
     pdf_path = 'receipt.pdf'
     y = data.page_higth
     # Create a PDF file
     c = canvas.Canvas(pdf_path, pagesize=(data.page_width, y))  # 227 points = 80mm width
-    c.setFont("PuffFont", data.font_size)
+    c.setFont("Helvetica", data.font_size)
     
     # Function to draw justified text
     def draw_justified_text(c, text_left, text_right, y):
         c.drawString(data.padding, y, text_left)
-        text_width = c.stringWidth(text_right, "PuffFont", data.font_size)
+        text_width = c.stringWidth(text_right, "Helvetica", data.font_size)
         c.drawString(data.page_width - data.padding - text_width, y, text_right)
     
     
@@ -45,21 +45,21 @@ def generate_and_print_pdf(request):
     y -= 20
     c.drawString(data.padding, y, "Mitra")
     y -= 17
-    c.drawString(data.padding, y, "-"*60)
+    c.drawString(data.padding, y, "-"*80)
     y -= 17
     c.drawString(data.padding, y, datetime_str)
     y -= 20
     c.drawString(data.padding, y, number)
     y -= 17
-    c.drawString(data.padding, y, "-"*60)
+    c.drawString(data.padding, y, "-"*80)
     y -= 17
     draw_justified_text(c, "1x Puff", f"Rp.{pembayaran}", y)
     y -= 17
-    c.drawString(data.padding, y, "-"*60)
+    c.drawString(data.padding, y, "-"*80)
     y -= 17
     draw_justified_text(c, "Total", f"Rp.{total}", y)
     y -= 17
-    c.drawString(data.padding, y, "-"*60)
+    c.drawString(data.padding, y, "-"*80)
     y -= 17
     draw_justified_text(c, f"{metode_bayar}:", f"Rp.{total}", y)
     y -= 20
