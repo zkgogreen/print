@@ -43,23 +43,25 @@ def generate_and_print_pdf(request):
     
     c.drawString(data.padding, y, toko)
     y -= 20
+    c.drawString(data.padding, y, "Mitra")
+    y -= 17
+    c.drawString(data.padding, y, "-"*60)
+    y -= 17
     c.drawString(data.padding, y, datetime_str)
     y -= 20
     c.drawString(data.padding, y, number)
-    y -= 20
+    y -= 17
     c.drawString(data.padding, y, "-"*60)
+    y -= 17
+    draw_justified_text(c, "1x Puff", f"Rp.{pembayaran}", y)
     y -= 20
-    draw_justified_text(c, "Total Pembayaran:", f"Rp.{pembayaran}", y)
-    y -= 20
+    draw_justified_text(c, "Total", f"Rp.{total}", y)
+    y -= 17
     c.drawString(data.padding, y, "-"*60)
-    y -= 20
+    y -= 17
     draw_justified_text(c, f"{metode_bayar}:", f"Rp.{total}", y)
     y -= 20
-    c.drawString(data.padding, y, "-"*60)
-    y -= 20
-    draw_justified_text(c, "Kembalian:", f"Rp.{kembalian}", y)
-    y -= 20
-    c.drawString(data.padding, y, "-"*60)
+    draw_justified_text(c, "Change", f"Rp.{kembalian}", y)
     
     # Finish up and save the PDF
     c.showPage()
@@ -76,7 +78,7 @@ def generate_and_print_pdf(request):
             ".",
             0
         )
-        print("Print job sent successfully.")
+        print("Print job sent successfully. "+str(data.font))
     except Exception as e:
         return HttpResponse(f"<center><h1>Gagal print dokumen : {str(e)} </h1></center>")
     
