@@ -54,7 +54,9 @@ def generate_and_print_pdf(request):
     c.drawString(data.padding, y, "-"*60)
     y -= 17
     draw_justified_text(c, "1x Puff", f"Rp.{pembayaran}", y)
-    y -= 20
+    y -= 17
+    c.drawString(data.padding, y, "-"*60)
+    y -= 17
     draw_justified_text(c, "Total", f"Rp.{total}", y)
     y -= 17
     c.drawString(data.padding, y, "-"*60)
