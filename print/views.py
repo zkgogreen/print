@@ -50,22 +50,22 @@ def generate_and_print_pdf(request):
     y -= 20
     c.drawString(data.padding, y, "Mitra")
     y -= 17
-    c.drawString(data.padding, y, "_"*50)
+    c.drawString(data.padding, y, "-"*60)
     y -= 17
     c.drawString(data.padding, y, datetime_str)
     y -= 20
     c.drawString(data.padding, y, number)
     y -= 17
-    c.drawString(data.padding, y, "_"*50)
+    c.drawString(data.padding, y, "-"*60)
     y -= 17
     for idx, item in enumerate(items):
         draw_justified_text(c, f"{jumlah[idx]}x {item}", f"Rp.{hargaitem[idx]}", y)
         y -= 17
-    c.drawString(data.padding, y, "_"*50)
+    c.drawString(data.padding, y, "-"*60)
     y -= 17
     draw_justified_text(c, "Total", f"Rp.{pembayaran}", y)
     y -= 17
-    c.drawString(data.padding, y, "_"*50)
+    c.drawString(data.padding, y, "-"*60)
     y -= 17
     draw_justified_text(c, f"{metode_bayar}:", f"Rp.{total}", y)
     y -= 20
