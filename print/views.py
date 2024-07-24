@@ -10,6 +10,8 @@ from reportlab.pdfbase import pdfmetrics
 
 from main.models import Main
 
+def splitItem(item : str):
+    return item.replace(' ','').replace("'",'').split(',')
 def generate_and_print_pdf(request):
 
     data = Main.objects.all().first()
@@ -23,6 +25,9 @@ def generate_and_print_pdf(request):
     total = request.GET.get('total', '0.00')
     metode_bayar = request.GET.get('metode_bayar', 'Cash')
     kembalian = request.GET.get('kembalian', '0.00')
+    items = splitItem(request.GET.get('item'))
+    hargaitem = splitItem(request.GET.get('hargaitem'))
+    jumlah = splitItem(request.GET.get('jumlah'))
 
     # Define the file path
     # pdfmetrics.registerFont(TTFont('PuffFont', data.font))
@@ -45,21 +50,22 @@ def generate_and_print_pdf(request):
     y -= 20
     c.drawString(data.padding, y, "Mitra")
     y -= 17
-    c.drawString(data.padding, y, "-"*80)
+    c.drawString(data.padding, y, "_"*50)
     y -= 17
     c.drawString(data.padding, y, datetime_str)
     y -= 20
     c.drawString(data.padding, y, number)
     y -= 17
-    c.drawString(data.padding, y, "-"*80)
+    c.drawString(data.padding, y, "_"*50)
     y -= 17
-    draw_justified_text(c, "1x Puff", f"Rp.{pembayaran}", y)
+    for idx, item in enumerate(items):
+        draw_justified_text(c, f"{jumlah[idx]}x {item}", f"Rp.{hargaitem[idx]}", y)
+        y -= 17
+    c.drawString(data.padding, y, "_"*50)
     y -= 17
-    c.drawString(data.padding, y, "-"*80)
+    draw_justified_text(c, "Total", f"Rp.{pembayaran}", y)
     y -= 17
-    draw_justified_text(c, "Total", f"Rp.{total}", y)
-    y -= 17
-    c.drawString(data.padding, y, "-"*80)
+    c.drawString(data.padding, y, "_"*50)
     y -= 17
     draw_justified_text(c, f"{metode_bayar}:", f"Rp.{total}", y)
     y -= 20
