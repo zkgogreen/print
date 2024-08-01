@@ -1,8 +1,8 @@
 from django.http import HttpResponse
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-# import win32print
-# import win32api
+import win32print
+import win32api
 import os
 from datetime import datetime
 from reportlab.pdfbase.ttfonts import TTFont
@@ -44,16 +44,16 @@ def generate_and_print_pdf(request):
     # toping = (request.GET.get('toping'))  
 
     arraylist = split_array_into_chunks(rasa1)
-    print(rasa1)
-    for arr in arraylist:
+    # print(rasa1)
+    # for arr in arraylist:
         # print(f"jumlah : {len(arr)}")
         # for idx, arr in enumerate(arr):
         #     print(idx, arr)
-        print(f"{arr[13]}x {arr[5]} {arr[4]}  {arr[14]}")
-        for item in arr[6:12]:
-            if item == '':
-                continue
-            print(" "+item)
+        # print(f"{arr[13]}x {arr[5]} {arr[4]}  {arr[14]}")
+        # for item in arr[6:12]:
+        #     if item == '':
+        #         continue
+        #     print(" "+item)
 
     # Define the file path
     # pdfmetrics.registerFont(TTFont('PuffFont', data.font))
@@ -124,15 +124,15 @@ def generate_and_print_pdf(request):
     
     # Print the PDF file
     try:
-        # printer_name = win32print.GetDefaultPrinter()
-        # win32api.ShellExecute(
-        #     0,
-        #     "print",
-        #     pdf_path,
-        #     f'/d:"{printer_name}"',
-        #     ".",
-        #     0
-        # )
+        printer_name = win32print.GetDefaultPrinter()
+        win32api.ShellExecute(
+            0,
+            "print",
+            pdf_path,
+            f'/d:"{printer_name}"',
+            ".",
+            0
+        )
         print("Print job sent successfully. "+str(data.font))
     except Exception as e:
         return HttpResponse(f"<center><h1>Gagal print dokumen : {str(e)} </h1></center>")
