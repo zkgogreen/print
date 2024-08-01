@@ -31,32 +31,10 @@ def generate_and_print_pdf(request):
     total = request.GET.get('total', '0.00')
     metode_bayar = request.GET.get('metode_bayar', 'Cash')
     kembalian = request.GET.get('kembalian', '0.00')
-    # items = splitItem(request.GET.get('item'))
-    # hargaitem = splitItem(request.GET.get('hargaitem'))
-    # jumlah = splitItem(request.GET.get('jumlah'))
 
     rasa1 = splitItem(request.GET.get('rasa1')) 
-    # rasa2 = (request.GET.get('rasa2')) 
-    # rasa3 = (request.GET.get('rasa3')) 
-    # rasa4 = (request.GET.get('rasa4')) 
-    # rasa5 = (request.GET.get('rasa5'))  
-    # paket = (request.GET.get('paket'))  
-    # toping = (request.GET.get('toping'))  
 
     arraylist = split_array_into_chunks(rasa1)
-    # print(rasa1)
-    # for arr in arraylist:
-        # print(f"jumlah : {len(arr)}")
-        # for idx, arr in enumerate(arr):
-        #     print(idx, arr)
-        # print(f"{arr[13]}x {arr[5]} {arr[4]}  {arr[14]}")
-        # for item in arr[6:12]:
-        #     if item == '':
-        #         continue
-        #     print(" "+item)
-
-    # Define the file path
-    # pdfmetrics.registerFont(TTFont('PuffFont', data.font))
     pdf_path = 'receipt.pdf'
     y = data.page_higth
     # Create a PDF file
@@ -84,29 +62,15 @@ def generate_and_print_pdf(request):
     y -= 17
     c.drawString(data.padding, y, "-"*60)
     y -= 17
-    # for idx, item in enumerate(items):
-    #     draw_justified_text(c, f"{jumlah[idx]}x {item}", f"Rp.{hargaitem[idx]}", y)
-    #     y -= 17
-
     for arr in arraylist:
-        # print(f"jumlah : {len(arr)}")
-        # for idx, arr in enumerate(arr):
-        #     print(idx, arr)
-        # print(f"{arr[13]}x {arr[5]} {arr[4]}  {arr[14]}")
-        # for item in arr[6:12]:
-        #     if item == '':
-        #         continue
-        #     print(" "+item)
-        draw_justified_text(c, f"  {arr[13]}x {arr[5]} {arr[4]}", f"Rp.{arr[14] or arr[15]}", y)
+        draw_justified_text(c, f"{arr[13]}x {arr[5]} {arr[4]}", f"Rp.{arr[14] or arr[15]}", y)
         y -= 15
         for item in arr[6:12]:
-            if item == '': 
+            if item == '':
                 continue
-            c.drawString(data.padding, y, f"{item}")
-            # draw_justified_text(c, " ", f"{item}", y)
-            # draw_justified_text(c, f"  {item}", y)
+            c.drawString(data.padding + 25, y, f"{item}")
             y -= 15
-        c.drawString(data.padding, y, f"{arr[17]}")
+        c.drawString(data.padding + 25, y, f"{arr[17]}")
         y -= 15
 
 
