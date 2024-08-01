@@ -64,7 +64,7 @@ def generate_and_print_pdf(request):
     y -= 17
     for arr in arraylist:
         y -= 15
-        draw_justified_text(c, f"{arr[13]}x {arr[5]} {arr[4]}", f"Rp.{arr[15] if int(arr[15]) < 1 else arr[14]}", y)
+        draw_justified_text(c, f"{arr[13]}x {arr[5]} {arr[4]}", f"Rp.{arr[15] if int(arr[15]) > 1 else arr[14]}", y)
         y -= 15
         for item in arr[6:12]:
             if item == '':
