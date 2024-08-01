@@ -63,14 +63,15 @@ def generate_and_print_pdf(request):
     c.drawString(data.padding, y, "-"*60)
     y -= 17
     for arr in arraylist:
-        draw_justified_text(c, f"{arr[13]}x {arr[5]} {arr[4]}", f"Rp.{arr[15] if arr[15] != 0 else arr[14]}", y)
+        y -= 15
+        draw_justified_text(c, f"{arr[13]}x {arr[5]} {arr[4]}", f"Rp.{arr[15] if int(arr[15]) < 1 else arr[14]}", y)
         y -= 15
         for item in arr[6:12]:
             if item == '':
                 continue
-            c.drawString(data.padding + 23, y, f"{item}")
+            c.drawString(data.padding + 22, y, f"{item}")
             y -= 15
-        c.drawString(data.padding + 23, y, f"{arr[17]}")
+        c.drawString(data.padding + 22, y, f"{arr[17]}")
         y -= 15
 
 
