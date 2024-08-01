@@ -102,11 +102,11 @@ def generate_and_print_pdf(request):
         for item in arr[6:12]:
             if item == '':
                 continue
-            c.drawString(data.padding + 26, y, f"{item}")
+            c.drawString(data.padding + 27, y, f"{item}")
             # draw_justified_text(c, " ", f"{item}", y)
             # draw_justified_text(c, f"  {item}", y)
             y -= 15
-        c.drawString(data.padding + 26, y, f"{arr[17]}")
+        c.drawString(data.padding + 27, y, f"{arr[17]}")
         y -= 15
 
 
