@@ -8,6 +8,7 @@ class Main(models.Model):
     font            = models.FileField(upload_to="media", null=True, blank=True)
     font_size       = models.IntegerField(default=12)
     toko            = models.CharField(default="Toko Kue", max_length=100)
+    brand           = models.CharField(default="Brand Test", max_length=100)
     def __str__(self):
         return self.toko
         

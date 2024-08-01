@@ -1,8 +1,8 @@
 from django.http import HttpResponse
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-import win32print
-import win32api
+# import win32print
+# import win32api
 import os
 from datetime import datetime
 from reportlab.pdfbase.ttfonts import TTFont
@@ -12,6 +12,11 @@ from main.models import Main
 
 def splitItem(item : str):
     return item.replace(' ','').replace("'",'').split(',')
+
+def split_array_into_chunks(array):
+    results = [array[i:i + 18] for i in range(0, len(array), 18)]
+    return results
+
 def generate_and_print_pdf(request):
 
     data = Main.objects.all().first()
@@ -20,14 +25,35 @@ def generate_and_print_pdf(request):
     datetime_str = request.GET.get('datetime', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     date_to_print = request.GET.get('datekasir', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     toko = request.GET.get('toko', data.toko)
+    brand = request.GET.get('brand', data.brand)
     kasir = request.GET.get('kasir', 'Default Cashier')
     pembayaran = request.GET.get('pembayaran', '0.00')
     total = request.GET.get('total', '0.00')
     metode_bayar = request.GET.get('metode_bayar', 'Cash')
     kembalian = request.GET.get('kembalian', '0.00')
-    items = splitItem(request.GET.get('item'))
-    hargaitem = splitItem(request.GET.get('hargaitem'))
-    jumlah = splitItem(request.GET.get('jumlah'))
+    # items = splitItem(request.GET.get('item'))
+    # hargaitem = splitItem(request.GET.get('hargaitem'))
+    # jumlah = splitItem(request.GET.get('jumlah'))
+
+    rasa1 = splitItem(request.GET.get('rasa1')) 
+    # rasa2 = (request.GET.get('rasa2')) 
+    # rasa3 = (request.GET.get('rasa3')) 
+    # rasa4 = (request.GET.get('rasa4')) 
+    # rasa5 = (request.GET.get('rasa5'))  
+    # paket = (request.GET.get('paket'))  
+    # toping = (request.GET.get('toping'))  
+
+    arraylist = split_array_into_chunks(rasa1)
+    print(rasa1)
+    for arr in arraylist:
+        # print(f"jumlah : {len(arr)}")
+        # for idx, arr in enumerate(arr):
+        #     print(idx, arr)
+        print(f"{arr[13]}x {arr[5]} {arr[4]}  {arr[14]}")
+        for item in arr[6:12]:
+            if item == '':
+                continue
+            print(" "+item)
 
     # Define the file path
     # pdfmetrics.registerFont(TTFont('PuffFont', data.font))
@@ -46,9 +72,9 @@ def generate_and_print_pdf(request):
     
     y -= 40
     
+    c.drawString(data.padding, y, brand)
+    y -= 17
     c.drawString(data.padding, y, toko)
-    y -= 20
-    c.drawString(data.padding, y, "Mitra")
     y -= 17
     c.drawString(data.padding, y, "-"*60)
     y -= 17
@@ -58,9 +84,30 @@ def generate_and_print_pdf(request):
     y -= 17
     c.drawString(data.padding, y, "-"*60)
     y -= 17
-    for idx, item in enumerate(items):
-        draw_justified_text(c, f"{jumlah[idx]}x {item}", f"Rp.{hargaitem[idx]}", y)
-        y -= 17
+    # for idx, item in enumerate(items):
+    #     draw_justified_text(c, f"{jumlah[idx]}x {item}", f"Rp.{hargaitem[idx]}", y)
+    #     y -= 17
+
+    for arr in arraylist:
+        # print(f"jumlah : {len(arr)}")
+        # for idx, arr in enumerate(arr):
+        #     print(idx, arr)
+        # print(f"{arr[13]}x {arr[5]} {arr[4]}  {arr[14]}")
+        # for item in arr[6:12]:
+        #     if item == '':
+        #         continue
+        #     print(" "+item)
+        draw_justified_text(c, f"{arr[13]}x {arr[5]} {arr[4]}", f"Rp.{arr[14]}", y)
+        y -= 15
+        for item in arr[6:12]:
+            if item == '':
+                continue
+            c.drawString(data.padding, y, f"  {item}")
+            # draw_justified_text(c, " ", f"{item}", y)
+            # draw_justified_text(c, f"  {item}", y)
+            y -= 15
+
+
     c.drawString(data.padding, y, "-"*60)
     y -= 17
     draw_justified_text(c, "Total", f"Rp.{pembayaran}", y)
@@ -77,15 +124,15 @@ def generate_and_print_pdf(request):
     
     # Print the PDF file
     try:
-        printer_name = win32print.GetDefaultPrinter()
-        win32api.ShellExecute(
-            0,
-            "print",
-            pdf_path,
-            f'/d:"{printer_name}"',
-            ".",
-            0
-        )
+        # printer_name = win32print.GetDefaultPrinter()
+        # win32api.ShellExecute(
+        #     0,
+        #     "print",
+        #     pdf_path,
+        #     f'/d:"{printer_name}"',
+        #     ".",
+        #     0
+        # )
         print("Print job sent successfully. "+str(data.font))
     except Exception as e:
         return HttpResponse(f"<center><h1>Gagal print dokumen : {str(e)} </h1></center>")
