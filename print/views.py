@@ -97,8 +97,6 @@ def generate_and_print_pdf(request):
         #     if item == '':
         #         continue
         #     print(" "+item)
-        c.drawString(data.padding, y, f"  {arr[17]}")
-        y -= 15
         draw_justified_text(c, f"  {arr[13]}x {arr[5]} {arr[4]}", f"Rp.{arr[14] or arr[15]}", y)
         y -= 15
         for item in arr[6:12]:
@@ -108,6 +106,8 @@ def generate_and_print_pdf(request):
             # draw_justified_text(c, " ", f"{item}", y)
             # draw_justified_text(c, f"  {item}", y)
             y -= 15
+        c.drawString(data.padding + 26, y, f"{arr[17]}")
+        y -= 15
 
 
     c.drawString(data.padding, y, "-"*60)
