@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {{data.toko}}</title>
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+<body>
+    <div class="w-100 ">
+        <div class="display-5 mt-5 mb-3 text-center">Edit</div>
+        <div class="p-3 shadow rounded-3 ">
+            <form action="" method="post" class="w-100" enctype="multipart/form-data">
+                {% bootstrap_form form %}
+                {% csrf_token %}
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <div>
+                        <a href="{% url 'print_receipt' %}" target="_blank" class="btn btn-danger">Test Print</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

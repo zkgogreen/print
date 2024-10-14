@@ -10,19 +10,39 @@
 </head>
 <body>
     <div class="container ">
-        <div class="display-5 mt-5 mb-3 text-center">Panel admin - {{data.toko}}</div>
-        <div class="p-3 shadow rounded-3">
-            <form action="" method="post" enctype="multipart/form-data">
-                {% bootstrap_form form %}
-                {% csrf_token %}
-                <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                    <div>
-                        <a href="{% url 'print_receipt' %}" target="_blank" class="btn btn-danger">Test Print</a>
-                    </div>
-                </div>
-
-            </form>
+       
+        <div class="p-3 shadow rounded-3 mt-5 mb-3">
+            
+            <div class="d-flex justify-content-between my-4">
+                <div class="h5   text-center">Panel admin</div>
+                <a href="{% url 'index:add' %}" class="btn btn-primary self-center">Tambah</a>
+              </div>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Toko</th>
+                    <th scope="col">Brand</th>
+                    <th scope="col">Alamat</th>
+                    <th scope="col">Ukuran</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Utama</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for data in datas %}
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>{{data.toko}}</td>
+                    <td>{{data.brand}}</td>
+                    <td>{{data.alamat}}</td>
+                    <td>{{data.page_width}} x {{data.page_higth}}</td>
+                    <td class="d-flex gap-2"><a href="{% url 'index:edit' id=data.id %}" class="text-decoration-none">Edit</a><a href="{% url 'index:edit' id=data.id %}" class="text-decoration-none text-danger">Hapus</a></td>
+                    <td>{% if data.utama %}Ya{% else %} <form action="" method="post">{% csrf_token %}<button type="submit" value="{{data.id}}" name="id" class="btn btn-sm btn-primary">Jadikan Utama</button></form> {% endif %}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
         </div>
     </div>
 </body>

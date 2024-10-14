@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {{data.toko}}</title>
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+<body>
+    <div class="w-100 ">
+        <div class="display-5 mt-5 mb-3 text-center">Panel admin - {{data.toko}}</div>
+        <div class="p-3 shadow rounded-3 d-flex justify-content-around">
+            
+            <form action="" method="post" class="col-6 shadow p-3" enctype="multipart/form-data">
+                {% bootstrap_form form %}
+                {% csrf_token %}
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <div>
+                        <a href="{% url 'print_receipt' %}" target="_blank" class="btn btn-danger">Test Print</a>
+                    </div>
+                </div>
+            </form>
+            {% if datas %}
+            <div class="p-3 col-4 shadow">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Urutan</th>
+                        <th scope="col">Nama</th>
+                        <th scope="col">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in datas %}
+                        
+                        <form action="{% url 'index:editSub' id=data.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{row.id}}">
+                            <tr>
+                                <td><input type="number" name="urutan" id="urutan" value="{{row.urutan}}" class="form-control"></td>
+                                <td><input type="text" name="nama" id="nama" value="{{row.nama}}" class="form-control"></td>
+                                <td class="d-flex gap-2">
+                                    <button type="submit" name="action" value="edit" class="btn btn-primary btn-sm">Ubah</button>
+                                    <button type="submit" name="action" value="delete" class="btn btn-danger btn-sm">Hapus</button>
+                                </td>
+                            </tr>
+                        </form>
+                        {% endfor %}
+                        <form action="{% url 'index:addSub' id=data.id %}" method="post">
+                            {% csrf_token %}
+                            <tr>
+                                <td><input type="number" name="urutan" id="urutan" class="form-control"></td>
+                                <td><input type="text" name="nama" id="nama" class="form-control"></td>
+                                <td><button type="submit" class="btn btn-primary btn-sm w-100">Tambah</button></td>
+                            </tr>
+                        </form>
+                    </tbody>
+                  </table>
+                </div>
+                {% endif %}
+        </div>
+    </div>
+</body>
+</html>
